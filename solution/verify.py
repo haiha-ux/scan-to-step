@@ -52,16 +52,17 @@ for i in (1, 2, 3):
     # deviation picture: scan points coloured by distance to the model, two views
     to, _ = trimesh.bounds.oriented_bounds(m)
     P = (to @ np.c_[pts, np.ones(len(pts))].T).T[:, :3]
-    fig, ax = plt.subplots(1, 3, figsize=(16, 5))
+    fig, ax = plt.subplots(1, 3, figsize=(16, 5.5), layout='constrained')
+    fig.suptitle(f'scan_{i}: scan points coloured by distance to model (mm)')
     for k, (u, v) in enumerate(((0, 2), (1, 2))):
         sc = ax[k].scatter(P[:, u], P[:, v], c=dist, s=0.3, cmap='viridis', vmin=0, vmax=0.12)
         ax[k].set_aspect('equal')
-        ax[k].set_title(f'scan_{i}, view along {"yx"[k]}: scan points coloured by distance to model (mm)')
+        ax[k].set_title(f'view along {"yx"[k]}')
         ax[k].set_xlabel(f'{"xy"[k]} (mm, oriented-box frame)'); ax[k].set_ylabel('z (mm)')
-    plt.colorbar(sc, ax=ax[1])
+    fig.colorbar(sc, ax=[ax[0], ax[1]], label='distance to model, mm')
     ax[2].hist(dist, bins=80); ax[2].axvline(p95, color='r'); ax[2].set_title(f'p95 {p95:.3f}  max {mx:.3f} mm')
     ax[2].set_xlabel('distance to model, mm'); ax[2].set_ylabel('count')
-    fig.tight_layout(); fig.savefig(f'solution/img/deviation_{i}.png', dpi=90); plt.close(fig)
+    fig.savefig(f'solution/img/deviation_{i}.png', dpi=90); plt.close(fig)
 rep["failed"] = fails
 json.dump(rep, open('solution/report.json', 'w'), indent=1, default=float)
 print('failed:', fails)
