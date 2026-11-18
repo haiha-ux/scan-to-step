@@ -1,6 +1,6 @@
 # Solution: scan to parametric STEP
 
-The three scans are simulated. The brief's author generated them from CAD parts, added about 0.03 mm of Gaussian
+The three scans are simulated. The brief's author made them from CAD parts, added about 0.03 mm of Gaussian
 noise, punched one or two holes, and rotated them at random. They are not real scanner data.
 
 Each part is rebuilt in build123d from planes and cylinders only, with no mesh or faceted face. Each model is put back
