@@ -8,7 +8,7 @@ Three simulated scans of machined parts, `scan_1.stl` to `scan_3.stl` (units mm)
 
 Declare exactly these dimension types (count in brackets). Extra or missing entries fail:
 - scan_1: hole_diameter (2), distance between the two hole centres (1), plate thickness (1), bbox (1)
-- scan_2: hole_diameter (2), depth (2: pocket depth, counterbore depth), distance (1), bbox (1)
+- scan_2: hole_diameter (2), depth (2: pocket depth, counterbore depth), distance (1: pocket centre to hole axis, measured along the long axis of the part), bbox (1)
 - scan_3: diameter (4: each turned diameter including the groove bottom), width (1: groove width), bbox (1)
 
 ## Scoring
