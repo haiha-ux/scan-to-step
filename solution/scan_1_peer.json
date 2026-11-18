@@ -1,0 +1,29 @@
+{
+ "dims": [
+  {
+   "type": "hole_diameter",
+   "value": 5.998
+  },
+  {
+   "type": "hole_diameter",
+   "value": 8.0
+  },
+  {
+   "type": "distance",
+   "value": 20.001
+  },
+  {
+   "type": "thickness",
+   "value": 4.002
+  },
+  {
+   "type": "bbox",
+   "value": [
+    29.993,
+    39.998,
+    59.997
+   ]
+  }
+ ],
+ "note": "plate thickness = upright (x); base thickness measured 4.001"
+}

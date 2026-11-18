@@ -1,0 +1,67 @@
+{
+ "scan_1": {
+  "volume": 13483.757689394975,
+  "analytic_area_fraction": 1.0,
+  "face_types": [
+   "CYLINDER",
+   "PLANE"
+  ],
+  "cylinder_diameters": [
+   5.984,
+   5.998,
+   8.0,
+   9.972
+  ],
+  "bbox_step": [
+   29.993,
+   39.998,
+   59.997
+  ],
+  "scan_to_model_p95": 0.05892596625344065,
+  "scan_to_model_max": 0.13267859770017484,
+  "scan_to_model_mean": 0.024060796384883384
+ },
+ "scan_2": {
+  "volume": 66518.34785197864,
+  "analytic_area_fraction": 1.0,
+  "face_types": [
+   "CYLINDER",
+   "PLANE"
+  ],
+  "cylinder_diameters": [
+   6.6,
+   10.999
+  ],
+  "bbox_step": [
+   30.0,
+   40.001,
+   60.001
+  ],
+  "scan_to_model_p95": 0.058808739278100965,
+  "scan_to_model_max": 0.12636312158711988,
+  "scan_to_model_mean": 0.023980595812133233
+ },
+ "scan_3": {
+  "volume": 27709.209445329583,
+  "analytic_area_fraction": 1.0,
+  "face_types": [
+   "CYLINDER",
+   "PLANE"
+  ],
+  "cylinder_diameters": [
+   13.999,
+   16.99,
+   19.996,
+   27.991
+  ],
+  "bbox_step": [
+   27.989,
+   27.989,
+   74.999
+  ],
+  "scan_to_model_p95": 0.05886614746540938,
+  "scan_to_model_max": 0.1336031229089649,
+  "scan_to_model_mean": 0.024072743951669244
+ },
+ "failed": []
+}

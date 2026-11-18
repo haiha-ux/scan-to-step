@@ -1,0 +1,32 @@
+{
+ "dims": [
+  {
+   "type": "diameter",
+   "value": 13.999
+  },
+  {
+   "type": "diameter",
+   "value": 19.996
+  },
+  {
+   "type": "diameter",
+   "value": 16.99
+  },
+  {
+   "type": "diameter",
+   "value": 27.991
+  },
+  {
+   "type": "width",
+   "value": 2.003
+  },
+  {
+   "type": "bbox",
+   "value": [
+    27.991,
+    27.991,
+    74.999
+   ]
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+{
+ "dims": [
+  {
+   "type": "hole_diameter",
+   "value": 10.999,
+   "name": "counterbore"
+  },
+  {
+   "type": "hole_diameter",
+   "value": 6.6,
+   "name": "through hole"
+  },
+  {
+   "type": "depth",
+   "value": 7.998,
+   "name": "pocket depth"
+  },
+  {
+   "type": "depth",
+   "value": 6.501,
+   "name": "counterbore depth"
+  },
+  {
+   "type": "distance",
+   "value": 26.799,
+   "name": "pocket centre to hole axis, projected on the long (60 mm) axis"
+  },
+  {
+   "type": "bbox",
+   "value": [
+    30.0,
+    40.001,
+    60.001
+   ]
+  }
+ ]
+}
