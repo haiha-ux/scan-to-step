@@ -27,33 +27,6 @@ def load(i, refine=True):
     return m, mm, to, good
 
 
-def vert_normals(mm):
-    return mm.vertex_normals, mm.vertices
-
-
-def plane_peaks(mm, good, axis, sign, tol=0.97, bin=0.05, min_area=2.0):
-    n = mm.face_normals; c = mm.triangles_center; a = mm.area_faces
-    sel = good & (n[:, axis] * sign > tol)
-    v = c[sel, axis]; w = a[sel]
-    if len(v) == 0:
-        return []
-    h, e = np.histogram(v, bins=np.arange(v.min() - bin, v.max() + 2 * bin, bin), weights=w)
-    peaks = []
-    for k in np.argsort(-h):
-        if h[k] < min_area: break
-        x = (e[k] + e[k + 1]) / 2
-        if all(abs(x - p) > 0.5 for p, _ in peaks):
-            near = sel & (np.abs(c[:, axis] - x) < 0.3)
-            # area-weighted mean of the face centres in the band = plane position
-            peaks.append((float(np.average(c[near, axis], weights=a[near])), float(a[near].sum())))
-    return sorted(peaks)
-
-
-def fit_plane(pts):
-    c = pts.mean(0); u, s, vt = np.linalg.svd(pts - c)
-    return c, vt[2], float(np.abs((pts - c) @ vt[2]).std())
-
-
 def fit_cyl(pts, axis0, c0, r0):
     """Cylinder: axis direction (2 angles), point on axis (2 coords), radius."""
     axis0 = axis0 / np.linalg.norm(axis0)
@@ -71,35 +44,6 @@ def fit_cyl(pts, axis0, c0, r0):
     a, b, x, y, r = s.x
     d = axis0 + a * e1 + b * e2; d /= np.linalg.norm(d)
     return c0 + x * e1 + y * e2, d, abs(r), float(np.std(res(s.x)))
-
-
-def leftovers(mm, good, planes, tol=0.12, ntol=0.97):
-    """Faces not explained by any axis plane; planes = [(axis, sign, pos)]."""
-    n = mm.face_normals; c = mm.triangles_center
-    used = np.zeros(len(n), bool)
-    for ax, sg, pos in planes:
-        used |= (n[:, ax] * sg > ntol) & (np.abs(c[:, ax] - pos) < tol)
-    return good & ~used
-
-
-def clusters(mm, mask, eps=1.0, min_area=1.0):
-    from scipy.sparse.csgraph import connected_components
-    from scipy.sparse import coo_matrix
-    idx = np.where(mask)[0]
-    # connectivity through shared vertices
-    f = mm.faces[idx]
-    nv = len(mm.vertices)
-    rows = np.repeat(np.arange(len(idx)), 3); cols = f.ravel()
-    A = coo_matrix((np.ones(len(rows)), (rows, cols)), shape=(len(idx), nv)).tocsr()
-    G = A @ A.T
-    k, lab = connected_components(G, directed=False)
-    out = []
-    for j in range(k):
-        s = idx[lab == j]
-        ar = mm.area_faces[s].sum()
-        if ar >= min_area:
-            out.append(s)
-    return sorted(out, key=lambda s: -mm.area_faces[s].sum())
 
 
 def frame_from_axis(c, d):
@@ -131,24 +75,6 @@ def scan_to_model(scan_mesh, step_path, samples=60000):
     d = np.concatenate([trimesh.proximity.closest_point(mod, pts[k:k + 5000])[1] for k in range(0, len(pts), 5000)])
     scan_to_model.pts = pts
     return d, s
-
-
-def smooth_points(mm, good, radius=1.0, max_pts=None):
-    """Points = vertices of real (non-fill) triangles, normals from PCA of a radius neighbourhood."""
-    from scipy.spatial import cKDTree
-    vid = np.unique(mm.faces[good].ravel())
-    P = mm.vertices[vid]
-    tree = cKDTree(P)
-    nb = tree.query_ball_point(P, radius, workers=-1)
-    N = np.zeros_like(P); curv = np.zeros(len(P))
-    vn = mm.vertex_normals[vid]
-    for i, idx in enumerate(nb):
-        Q = P[idx] - P[idx].mean(0)
-        w, V = np.linalg.eigh(Q.T @ Q)
-        nrm = V[:, 0]
-        N[i] = nrm if nrm @ vn[i] >= 0 else -nrm
-        curv[i] = w[0] / max(w.sum(), 1e-12)
-    return P, N, curv
 
 
 def fit_circle2d(Q, guess):

@@ -70,5 +70,5 @@ dims = [{"type": "hole_diameter", "value": round(2 * cb_r, 3), "name": "counterb
 json.dump({"dims": dims}, open('solution/scan_2_peer.json', 'w'), indent=1)
 print(json.dumps(dims), 'chamfer', round(C, 3), 'pocket round', round(R_pk, 3), use_pk_round)
 d_, s_ = M.scan_to_model(m, 'solution/scan_2.step')
-np.save('solution/_d2.npy', d_)
+
 print('scan->model p95 %.4f max %.4f mean %.4f volume %.1f' % (np.percentile(d_, 95), d_.max(), d_.mean(), s_.volume))
